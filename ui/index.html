@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PGN Scoreboard</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+  </head>
+  <body>
+    <div id="scoreboard_container" v-show="displaying">
+      <div id="scoreboard">
+        <div id="scoreboard_header">
+          ProGamerNetwork | {{ connectedPlayers.length }}/{{ maxPlayers }} Players
+          <!-- <br> -->
+          <!-- [{{ connectedPlayers.length }} / {{ maxPlayers }}] Players -->
+        </div>
+        <div id="scoreboard_body">
+          <div class="player_header">
+            <div class="id_header">
+              ID
+            </div>
+            <div class="name_header">
+              Name
+            </div>
+            <div class="ping_header">
+              Ping
+            </div>
+          </div>
+          <div id="scoreboard_players">
+            <div class="player" v-for="(player, playerIndex) in connectedPlayers" v-if="playerIndex >= (selectedPage * maxPerPage) - maxPerPage && playerIndex <= (selectedPage * maxPerPage)">
+              <div class="player_data">
+                <div class="id">
+                  {{ player.handle }}
+                </div>
+                <div class="name">
+                  {{ player.name }}
+                </div>
+                <div class="ping">
+                  <span :class="{
+                    'green': player.ping <= 40,
+                    'yellow': player.ping <= 80 && player.ping > 40,
+                    'orange': player.ping < 140 && player.ping > 80,
+                    'red': player.ping >= 140
+                  }">
+                    {{ player.ping }}
+                  </span>
+                  ms
+                </div>
+              </div>
+              <div class="buttons">
+                <button>Copy Identifiers</button>
+              </div>  
+            </div>
+          </div>
+          <div id="scoreboard_animation"></div>
+          <div id="scoreboard_pages">
+            Page {{ selectedPage }} / {{ pageCount }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./libraries/js/vue.js"></script>
+    <script src="events.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
