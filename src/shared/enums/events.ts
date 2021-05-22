@@ -17,7 +17,6 @@ export enum Events {
     playerDropped = "playerDropped",
   
     // Scoreboard Server Events
-    playerLoaded = "pgn-scoreboard-server:playerLoaded",
     requestPlayers = "pgn-scoreboard-server:requestPlayers",
 
     // Scoreboard Client Events
