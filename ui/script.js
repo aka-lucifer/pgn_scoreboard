@@ -8,7 +8,6 @@ const Scoreboard = new Vue({
         maxPlayers: 100,
         selectedPage: 1,
         maxPerPage: 10,
-        pageCount: 1,
         animating: false,
 
         // Arrays
@@ -18,10 +17,6 @@ const Scoreboard = new Vue({
     methods: {
         DisplayScoreboard(data) {
             this.connectedPlayers = data.players || [];
-            this.pageCount = this.connectedPlayers.length / this.maxPerPage;
-            if (this.pageCount > Math.floor(this.pageCount)) {
-                this.pageCount = Math.floor(this.pageCount + 1);
-            }
             this.maxPlayers = data.maxPlayers || 32;
             this.displaying = true;
         },
@@ -50,6 +45,12 @@ const Scoreboard = new Vue({
             }, 500);
         }
     },
+    
+    computed: {
+        pageCount: function() {
+            return Math.ceil(this.connectedPlayers.length / 10);
+        }
+    },
 
     mounted() {
         RegisterEvent("open_scoreboard", this.DisplayScoreboard);
@@ -57,7 +58,3 @@ const Scoreboard = new Vue({
         RegisterEvent("change_page", this.ChangePage);
     }
 })
-
-function RandomBetween(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
