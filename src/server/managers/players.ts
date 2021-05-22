@@ -27,13 +27,10 @@ export class PlayerManager {
     }
   }
 
-  public async Remove(playerHandle: string): Promise<boolean> {
+  public Remove(playerHandle: string): void {
     const playerIndex = this.connectedPlayers.findIndex(player => player.GetHandle == playerHandle);
     if (playerIndex != -1) {
-      this.connectedPlayers.splice(1, playerIndex);
-      return true;
+      this.connectedPlayers.splice(playerIndex, 1);
     }
-
-    return false;
   }
 }
